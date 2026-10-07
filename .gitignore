@@ -1,0 +1,28 @@
+# Maven / Java
+**/target/
+**/.classpath
+**/.project
+**/.settings/
+*.class
+*.log
+
+# IDE
+.vscode/
+.idea/
+
+# Entorno / temporales
+.env
+retiro.json
+scripts/retiro-consistencia-temp.json
+*.tmp
+*.bak
+
+# Keystores privados generales
+*.jks
+*.p12
+
+# Excepción: certificados locales de demostración requeridos por los BFF.
+# Son certificados autofirmados de laboratorio con password "changeit".
+!bff-web/src/main/resources/keystore.p12
+!bff-mobile/src/main/resources/keystore.p12
+!bff-atm/src/main/resources/keystore.p12

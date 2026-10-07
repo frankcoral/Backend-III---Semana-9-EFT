@@ -1,0 +1,25 @@
+info:
+  app:
+    name: Banco XYZ - Gestion de Cuentas
+    componente: cuentas-service
+    config-origin: config-server
+    eft: PBY2203
+
+management:
+  endpoints:
+    web:
+      exposure:
+        include: health,info,circuitbreakers
+  endpoint:
+    health:
+      show-details: always
+
+resilience4j:
+  circuitbreaker:
+    instances:
+      cuentasKafka:
+        sliding-window-size: 5
+        minimum-number-of-calls: 3
+        failure-rate-threshold: 50
+        wait-duration-in-open-state: 10s
+        permitted-number-of-calls-in-half-open-state: 2

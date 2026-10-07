@@ -1,0 +1,19 @@
+eft:
+  config:
+    origen: config-server
+    canal: WEB
+    mensaje: Configuracion centralizada cargada para BFF Web
+
+resilience4j:
+  circuitbreaker:
+    instances:
+      webAgregacion:
+        sliding-window-type: COUNT_BASED
+        sliding-window-size: 4
+        minimum-number-of-calls: 2
+        failure-rate-threshold: 50
+        wait-duration-in-open-state: 10s
+        permitted-number-of-calls-in-half-open-state: 1
+        ignore-exceptions:
+          - org.springframework.web.client.HttpClientErrorException
+        automatic-transition-from-open-to-half-open-enabled: true

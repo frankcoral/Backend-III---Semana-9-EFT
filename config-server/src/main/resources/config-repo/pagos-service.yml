@@ -1,0 +1,39 @@
+info:
+  app:
+    name: Banco XYZ - Procesamiento de Pagos
+    componente: pagos-service
+    config-origin: config-server
+    eft: PBY2203
+
+management:
+  endpoints:
+    web:
+      exposure:
+        include: health,info,circuitbreakers
+  endpoint:
+    health:
+      show-details: always
+
+resilience4j:
+  circuitbreaker:
+    instances:
+      cuentasService:
+        sliding-window-size: 5
+        minimum-number-of-calls: 3
+        failure-rate-threshold: 50
+        wait-duration-in-open-state: 10s
+        permitted-number-of-calls-in-half-open-state: 2
+        ignore-exceptions:
+          - com.bancoxyz.pagos.exception.RecursoNoEncontradoException
+          - com.bancoxyz.pagos.exception.OperacionPagoException
+      pagosKafka:
+        sliding-window-size: 5
+        minimum-number-of-calls: 3
+        failure-rate-threshold: 50
+        wait-duration-in-open-state: 10s
+        permitted-number-of-calls-in-half-open-state: 2
+
+pagos:
+  eventos:
+    retry-ms: 30000
+    initial-delay-ms: 15000
